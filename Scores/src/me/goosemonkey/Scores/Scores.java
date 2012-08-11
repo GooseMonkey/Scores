@@ -84,12 +84,35 @@ public class Scores extends JavaPlugin
 	}
 	
 	/**
+	 * Sets an offline player's score
+	 * @param player Player to set score of
+	 * @param score The score
+	 */
+	public static void setScore(OfflinePlayer player, int score)
+	{
+		Scores.getScoresDataConfig().set("scores." + player.getName().toLowerCase(), score);
+	}
+	
+	/**
 	 * Basic method to raise or lower a score by a certain amount
 	 * @param player Player to modify score of
 	 * @param amount Amount to change. Negative to take away points
 	 * @return The player's new score
 	 */
 	public static int modifyScore(Player player, int amount)
+	{
+		Scores.setScore(player, Scores.getScore(player) + amount);
+		
+		return Scores.getScore(player);
+	}
+	
+	/**
+	 * Raises or lowers an offline player's score
+	 * @param player Player to modify score of
+	 * @param amount Amount to change. Negative to take away points
+	 * @return The player's new score
+	 */
+	public static int modifyScore(OfflinePlayer player, int amount)
 	{
 		Scores.setScore(player, Scores.getScore(player) + amount);
 		

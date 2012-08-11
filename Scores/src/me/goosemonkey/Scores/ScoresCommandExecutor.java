@@ -41,7 +41,7 @@ public class ScoresCommandExecutor implements CommandExecutor
 			{
 				Player player = plugin.getServer().getPlayer(args[0]);
 				
-				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.otherScore", "&player& has §a&score&§b points.").replace("&player&", player.getDisplayName()).replace("&score&", "" + Scores.getScore(player)));
+				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.otherScore", "&player& has §a&score&§b points.").replace("&player&", player.getName()).replace("&score&", "" + Scores.getScore(player)));
 			
 				return true;
 			}
@@ -56,8 +56,172 @@ public class ScoresCommandExecutor implements CommandExecutor
 					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.unknownPlayer", "Player &input& not found. If the player is offline, the full name must be entered case sensitively.").replace("&input&", args[0]));	
 				}
 			}
+			
+			return true;
 		}
 		
-		return true;
+		if (args.length == 2)
+		{
+			// 0: Operation, 1: Argument
+			
+			plugin.getServer().dispatchCommand(sender, "scores " + args[0] + " " + sender.getName() + " " + args[1]);
+			
+			return true;
+		}
+		
+		if (args.length == 3)
+		{
+			// 0: Operation, 1: Player, 2: Argument
+			
+			Player player = plugin.getServer().getPlayer(args[1]);
+			int score;
+			try
+			{
+				score = Integer.parseInt(args[2]);
+			}
+			catch (NumberFormatException e)
+			{
+				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.invalidInteger", "&input& is not a valid integer.").replace("&input&", args[2]));
+				
+				return true;
+			}
+			
+			if (args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("s"))
+			{
+				if (player != null)
+				{
+					Scores.setScore(player, score);
+					
+					if (sender instanceof Player)
+					{
+						Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.setScore", "&player&'s score set to §a&score&§b.").replace("&player&", player.getName()).replace("&score&", "" + score));
+					}
+					
+					plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Set " + player.getName() + "'s score to " + score);
+					
+					return true;
+				}
+				else
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.unknownPlayerOffline", "Player &input& not found. If the player is offline, add -e to the end of the command and use the exact name.").replace("&input&", args[1]));	
+					
+					return true;
+				}
+			}
+			
+			if (args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("a"))
+			{
+				if (player != null)
+				{
+					Scores.modifyScore(player, score);
+					
+					if (sender instanceof Player)
+					{
+						Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.addScore", "§a&score&§b points added to &player&'s score. §a[&newscore&]§b").replace("&player&", player.getName()).replace("&score&", "" + score).replace("&newscore&", "" + Scores.getScore(player)));
+					}
+					
+					plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Added " + score + " points to " + player.getName() + "'s score. [" + Scores.getScore(player) + "]");
+					
+					return true;
+				}
+				else
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.unknownPlayerOffline", "Player &input& not found. If the player is offline, add -e to the end of the command and use the exact name.").replace("&input&", args[1]));	
+					
+					return true;
+				}
+			}
+			
+			if (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("r"))
+			{
+				if (player != null)
+				{
+					Scores.modifyScore(player, 0 - score);
+					
+					if (sender instanceof Player)
+					{
+						Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.removeScore", "§a&score&§b points removed from &player&'s score. §a[&newscore&]§b").replace("&player&", player.getName()).replace("&score&", "" + score).replace("&newscore&", "" + Scores.getScore(player)));
+					}
+					
+					plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Removed " + score + " points from " + player.getName() + "'s score. [" + Scores.getScore(player) + "]");
+					
+					return true;
+				}
+				else
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.unknownPlayerOffline", "Player &input& not found. If the player is offline, add -e to the end of the command and use the exact name.").replace("&input&", args[1]));	
+					
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		if (args.length == 4)
+		{
+			// 0: Operation, 1: Player, 2: Argument, 3: -e
+			
+			int score;
+			try
+			{
+				score = Integer.parseInt(args[2]);
+			}
+			catch (NumberFormatException e)
+			{
+				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.invalidInteger", "&input& is not a valid integer.").replace("&input&", args[2]));
+				
+				return true;
+			}
+
+			if (!args[3].equalsIgnoreCase("-e"))
+				return false;
+			
+			if (args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("s"))
+			{
+				Scores.setScore(plugin.getServer().getOfflinePlayer(args[1]), score);
+				
+				if (sender instanceof Player)
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.setScore", "&player&'s score set to §a&score&§b.").replace("&player&", args[1]).replace("&score&", "" + score));
+				}
+				
+				plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Set " + args[1] + "'s score to " + score);
+				
+				return true;
+			}
+			
+			if (args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("a"))
+			{
+				Scores.modifyScore(plugin.getServer().getOfflinePlayer(args[1]), score);
+				
+				if (sender instanceof Player)
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.addScore", "§a&score&§b points added to &player&'s score. §a[&newscore&]§b").replace("&player&", args[1]).replace("&score&", "" + score).replace("&newscore&", "" + Scores.getScore(plugin.getServer().getOfflinePlayer(args[1]))));
+				}
+				
+				plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Added " + score + " points to " + args[1] + "'s score. [" + Scores.getScore(plugin.getServer().getOfflinePlayer(args[1])) + "]");
+				
+				return true;
+			}
+
+			if (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("r"))
+			{
+				Scores.modifyScore(plugin.getServer().getOfflinePlayer(args[1]), 0 - score);
+				
+				if (sender instanceof Player)
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.removeScore", "§a&score&§b points removed from &player&'s score. §a[&newscore&]§b").replace("&player&", args[1]).replace("&score&", "" + score).replace("&newscore&", "" + Scores.getScore(plugin.getServer().getOfflinePlayer(args[1]))));
+				}
+				
+				plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Removed " + score + " points from " + args[1] + "'s score. [" + Scores.getScore(plugin.getServer().getOfflinePlayer(args[1])) + "]");
+				
+				return true;
+			}
+			
+			return false;
+		}
+		
+		return false;
 	}
 }
