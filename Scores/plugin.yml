@@ -1,0 +1,14 @@
+name: Scores
+main: me.goosemonkey.Scores.Scores
+version: 0.0
+
+author: GooseMonkey97
+website: http://dev.bukkit.org/server-mods/scores/
+
+softdepend: []
+
+commands:
+    score:
+        description: Main command for all Scores-related functions
+        usage: /<command> help
+        aliases: scores
