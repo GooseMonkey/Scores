@@ -14,6 +14,8 @@ public class Scores extends JavaPlugin
 	public void onEnable()
 	{
 		this.setupConfig();
+		
+		this.getCommand("score").setExecutor(new ScoresCommandExecutor(this));
 	}
 	
 	private void setupConfig()
@@ -57,7 +59,7 @@ public class Scores extends JavaPlugin
 	 */
 	public static int getScore(Player player)
 	{
-		return Scores.getScoresDataConfig().getInt("scores." + player.getName(), 0);
+		return Scores.getScoresDataConfig().getInt("scores." + player.getName().toLowerCase(), 0);
 	}
 	
 	/**
@@ -67,7 +69,7 @@ public class Scores extends JavaPlugin
 	 */
 	public static void setScore(Player player, int score)
 	{
-		Scores.getScoresDataConfig().set("scores." + player.getName(), score);
+		Scores.getScoresDataConfig().set("scores." + player.getName().toLowerCase(), score);
 	}
 	
 	/**
@@ -90,7 +92,7 @@ public class Scores extends JavaPlugin
 	 */
 	public static void sendScoresMessage(CommandSender receiver, String message)
 	{
-		receiver.sendMessage(Scores.getLocaleConfig().getString("messagePrefix", "§6[Scores]§c ") + message);
+		receiver.sendMessage(Scores.getLocaleConfig().getString("messagePrefix", "§6[Scores]§c") + " " + message);
 	}
 	
 	/**

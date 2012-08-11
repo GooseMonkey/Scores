@@ -25,11 +25,16 @@ public class ConfigLocale extends ConfigAbstract
 	@Override
 	public void setDefaultValues()
 	{
-		this.checkSet("messagePrefix", "§6[Scores]§c");
+		this.checkSet("messagePrefix", "§6[Scores]§b");
 		
-		this.checkSet("message.earnPoints", "You've earned &score& points for &reason&.");
-		this.checkSet("message.earnPoint", "You've earned &score& point for &reason&.");
-		this.checkSet("message.losePoints", "You've lost &score& points for &reason&.");
-		this.checkSet("message.losePoint", "You've lost &score& point for &reason&.");
+		this.checkSet("message.version", "Version &version& by GooseMonkey");
+		
+		this.checkSet("message.getScore", "You have §a&score&§b points.");
+		
+		this.checkSet("message.earnPoints", "You've earned §a&score&§b points for &reason&.");
+		this.checkSet("message.earnPoint", "You've earned §a&score&§b point for &reason&.");
+		this.checkSet("message.losePoints", "You've lost §a&score&§b points for &reason&.");
+		this.checkSet("message.losePoint", "You've lost §a&score&§b point for &reason&.");
+		
 	}
 }
