@@ -30,6 +30,8 @@ public class ConfigLocale extends ConfigAbstract
 		this.checkSet("message.version", "Version &version& by GooseMonkey");
 		
 		this.checkSet("message.getScore", "You have §a&score&§b points.");
+		this.checkSet("message.otherScore", "&player& has §a&score&§b points.");
+		this.checkSet("message.unknownPlayer", "Player &input& not found. If the player is offline, the full name must be entered case sensitively.");
 		
 		this.checkSet("message.earnPoints", "You've earned §a&score&§b points for &reason&.");
 		this.checkSet("message.earnPoint", "You've earned §a&score&§b point for &reason&.");

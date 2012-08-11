@@ -1,5 +1,6 @@
 package me.goosemonkey.Scores;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -60,6 +61,16 @@ public class Scores extends JavaPlugin
 	public static int getScore(Player player)
 	{
 		return Scores.getScoresDataConfig().getInt("scores." + player.getName().toLowerCase(), 0);
+	}
+	
+	/**
+	 * Gets an offline player's score
+	 * @param player Player
+	 * @return Null if the player isn't found
+	 */
+	public static int getScore(OfflinePlayer player)
+	{
+		return Scores.getScoresDataConfig().getInt("scores." + player.getName().toLowerCase());
 	}
 	
 	/**

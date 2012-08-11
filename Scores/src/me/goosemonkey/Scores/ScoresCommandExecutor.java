@@ -24,10 +24,37 @@ public class ScoresCommandExecutor implements CommandExecutor
 				Player player = (Player) sender;
 				
 				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.getScore", "You have &score& points.").replace("&score&", "" + Scores.getScore(player)));
+				
+				return true;
 			}
 			else
 			{
 				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.version", "Version &version& by GooseMonkey").replace("&version&", plugin.getDescription().getVersion()));
+			
+				return true;
+			}
+		}
+		
+		if (args.length == 1)
+		{
+			if (plugin.getServer().getPlayer(args[0]) != null)
+			{
+				Player player = plugin.getServer().getPlayer(args[0]);
+				
+				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.otherScore", "&player& has §a&score&§b points.").replace("&player&", player.getDisplayName()).replace("&score&", "" + Scores.getScore(player)));
+			
+				return true;
+			}
+			else
+			{
+				if (Scores.getScoresDataConfig().isInt("scores." + args[0].toLowerCase()))
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.otherScore", "&player& has §a&score&§b points.").replace("&player&", args[0]).replace("&score&", "" + Scores.getScore(plugin.getServer().getOfflinePlayer(args[0]))));
+				}
+				else
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.unknownPlayer", "Player &input& not found. If the player is offline, the full name must be entered case sensitively.").replace("&input&", args[0]));	
+				}
 			}
 		}
 		
