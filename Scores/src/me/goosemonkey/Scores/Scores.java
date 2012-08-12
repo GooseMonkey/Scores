@@ -216,7 +216,7 @@ public class Scores extends JavaPlugin
 			
 			msg = Scores.getLocaleConfig().getString(path, def);
 			
-			msg = msg.replace("&score&", "" + amount);
+			msg = msg.replace("&score&", "" + (amount < 0 ? 0 - amount : amount));
 			msg = msg.replace("&reason&", reason);
 			
 			Scores.sendScoresMessage(player, msg);
