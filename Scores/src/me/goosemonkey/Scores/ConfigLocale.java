@@ -28,6 +28,7 @@ public class ConfigLocale extends ConfigAbstract
 		this.checkSet("messagePrefix", "§6[Scores]§b");
 		
 		this.checkSet("message.version", "Version &version& by GooseMonkey");
+		this.checkSet("message.permissionDeny", "§cYou don't have permission.");
 		
 		this.checkSet("message.getScore", "You have §a&score&§b points.");
 		this.checkSet("message.otherScore", "&player& has §a&score&§b points.");

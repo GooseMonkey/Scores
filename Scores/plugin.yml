@@ -12,3 +12,22 @@ commands:
         description: Main command for all Scores-related functions
         usage: /<command> help
         aliases: scores
+permissions:
+    scores.*:
+        default: op
+        description: All permissions in Scores
+        children:
+            scores.help: true
+            scores.check: true
+            scores.check.others: true
+            scores.modify: true
+    scores.help:
+        default: true
+        description: Get help with /scores help
+    scores.check:
+        default: true
+        description: Check score with /score
+    scores.check.others:
+        description: Check other players' scores with /score <name>
+    scores.modify:
+        description: Modify all player's scores in all ways with /score set/add/remove

@@ -182,4 +182,15 @@ public class Scores extends JavaPlugin
 		
 		return Scores.getScore(player);
 	}
+	
+	/**
+	 * Checks if the user has a permissions node. Currently just checks Player.hasPermission, but may change in the future
+	 * @param player Player
+	 * @param node Node
+	 * @return Whether Player has Node
+	 */
+	public static boolean hasPermission(CommandSender sender, String node)
+	{
+		return sender.hasPermission(node);
+	}
 }

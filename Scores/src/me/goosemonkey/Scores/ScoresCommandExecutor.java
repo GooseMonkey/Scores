@@ -23,7 +23,14 @@ public class ScoresCommandExecutor implements CommandExecutor
 			{
 				Player player = (Player) sender;
 				
-				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.getScore", "You have &score& points.").replace("&score&", "" + Scores.getScore(player)));
+				if (Scores.hasPermission(player, "scores.check"))
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.getScore", "You have &score& points.").replace("&score&", "" + Scores.getScore(player)));
+				}
+				else
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.permissionDeny", "§cYou don't have permission."));
+				}
 				
 				return true;
 			}
@@ -37,19 +44,33 @@ public class ScoresCommandExecutor implements CommandExecutor
 		
 		if (args.length == 1)
 		{
+			if (!Scores.hasPermission(sender, "scores.check.others"))
+			{
+				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.permissionDeny", "§cYou don't have permission."));
+
+				return true;
+			}
+
 			if (plugin.getServer().getPlayer(args[0]) != null)
 			{
 				Player player = plugin.getServer().getPlayer(args[0]);
 				
 				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.otherScore", "&player& has §a&score&§b points.").replace("&player&", player.getName()).replace("&score&", "" + Scores.getScore(player)));
-			
+
 				return true;
 			}
 			else
 			{
 				if (Scores.getScoresDataConfig().isInt("scores." + args[0].toLowerCase()))
 				{
-					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.otherScore", "&player& has §a&score&§b points.").replace("&player&", args[0]).replace("&score&", "" + Scores.getScore(plugin.getServer().getOfflinePlayer(args[0]))));
+					if (Scores.hasPermission(sender, "scores.check.others"))
+					{
+						Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.otherScore", "&player& has §a&score&§b points.").replace("&player&", args[0]).replace("&score&", "" + Scores.getScore(plugin.getServer().getOfflinePlayer(args[0]))));
+					}
+					else
+					{
+						Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.permissionDeny", "§cYou don't have permission."));
+					}
 				}
 				else
 				{
@@ -88,6 +109,13 @@ public class ScoresCommandExecutor implements CommandExecutor
 			
 			if (args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("s"))
 			{
+				if (!Scores.hasPermission(sender, "scores.modify"))
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.permissionDeny", "§cYou don't have permission."));
+
+					return true;
+				}
+				
 				if (player != null)
 				{
 					Scores.setScore(player, score);
@@ -111,6 +139,13 @@ public class ScoresCommandExecutor implements CommandExecutor
 			
 			if (args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("a"))
 			{
+				if (!Scores.hasPermission(sender, "scores.modify"))
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.permissionDeny", "§cYou don't have permission."));
+
+					return true;
+				}
+
 				if (player != null)
 				{
 					Scores.modifyScore(player, score);
@@ -134,6 +169,13 @@ public class ScoresCommandExecutor implements CommandExecutor
 			
 			if (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("r"))
 			{
+				if (!Scores.hasPermission(sender, "scores.modify"))
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.permissionDeny", "§cYou don't have permission."));
+
+					return true;
+				}
+
 				if (player != null)
 				{
 					Scores.modifyScore(player, 0 - score);
@@ -179,6 +221,13 @@ public class ScoresCommandExecutor implements CommandExecutor
 			
 			if (args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("s"))
 			{
+				if (!Scores.hasPermission(sender, "scores.modify"))
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.permissionDeny", "§cYou don't have permission."));
+
+					return true;
+				}
+
 				Scores.setScore(plugin.getServer().getOfflinePlayer(args[1]), score);
 				
 				if (sender instanceof Player)
@@ -193,6 +242,13 @@ public class ScoresCommandExecutor implements CommandExecutor
 			
 			if (args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("a"))
 			{
+				if (!Scores.hasPermission(sender, "scores.modify"))
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.permissionDeny", "§cYou don't have permission."));
+
+					return true;
+				}
+
 				Scores.modifyScore(plugin.getServer().getOfflinePlayer(args[1]), score);
 				
 				if (sender instanceof Player)
@@ -207,6 +263,13 @@ public class ScoresCommandExecutor implements CommandExecutor
 
 			if (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("r"))
 			{
+				if (!Scores.hasPermission(sender, "scores.modify"))
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.permissionDeny", "§cYou don't have permission."));
+
+					return true;
+				}
+
 				Scores.modifyScore(plugin.getServer().getOfflinePlayer(args[1]), 0 - score);
 				
 				if (sender instanceof Player)
