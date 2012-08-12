@@ -3,6 +3,7 @@ package me.goosemonkey.Scores.defaultlisteners;
 import me.goosemonkey.Scores.Scores;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -20,6 +21,9 @@ public class DefaultListeners implements Listener
 	@EventHandler (priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onBlockBreak(BlockBreakEvent event)
 	{
+		if (event.getPlayer().getItemInHand().containsEnchantment(Enchantment.SILK_TOUCH))
+			return;
+		
 		Material material = event.getBlock().getType();
 		
 		switch (material)
