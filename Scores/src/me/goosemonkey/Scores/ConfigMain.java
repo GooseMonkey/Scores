@@ -26,5 +26,8 @@ public class ConfigMain extends ConfigAbstract
 	public void setDefaultValues()
 	{
 		this.checkSet("saveOnScoreChange", true);
+		
+		this.checkSet("log.rewards", true);
+		this.checkSet("log.commands", true);
 	}
 }

@@ -157,7 +157,8 @@ public class ScoresCommandExecutor implements CommandExecutor
 						Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.setScore", "&player&'s score set to §a&score&§b.").replace("&player&", player.getName()).replace("&score&", "" + score));
 					}
 					
-					plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Set " + player.getName() + "'s score to " + score);
+					if (Scores.getMainConfig().getBoolean("log.commands", true))
+						plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Set " + player.getName() + "'s score to " + score);
 					
 					return true;
 				}
@@ -187,7 +188,8 @@ public class ScoresCommandExecutor implements CommandExecutor
 						Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.addScore", "§a&score&§b points added to &player&'s score. §a[&newscore&]§b").replace("&player&", player.getName()).replace("&score&", "" + score).replace("&newscore&", "" + Scores.getScore(player)));
 					}
 					
-					plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Added " + score + " points to " + player.getName() + "'s score. [" + Scores.getScore(player) + "]");
+					if (Scores.getMainConfig().getBoolean("log.commands", true))
+						plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Added " + score + " points to " + player.getName() + "'s score. [" + Scores.getScore(player) + "]");
 					
 					return true;
 				}
@@ -217,7 +219,8 @@ public class ScoresCommandExecutor implements CommandExecutor
 						Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.removeScore", "§a&score&§b points removed from &player&'s score. §a[&newscore&]§b").replace("&player&", player.getName()).replace("&score&", "" + score).replace("&newscore&", "" + Scores.getScore(player)));
 					}
 					
-					plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Removed " + score + " points from " + player.getName() + "'s score. [" + Scores.getScore(player) + "]");
+					if (Scores.getMainConfig().getBoolean("log.commands", true))
+						plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Removed " + score + " points from " + player.getName() + "'s score. [" + Scores.getScore(player) + "]");
 					
 					return true;
 				}
@@ -267,7 +270,8 @@ public class ScoresCommandExecutor implements CommandExecutor
 					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.setScore", "&player&'s score set to §a&score&§b.").replace("&player&", args[1]).replace("&score&", "" + score));
 				}
 				
-				plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Set " + args[1] + "'s score to " + score);
+				if (Scores.getMainConfig().getBoolean("log.commands", true))
+					plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Set " + args[1] + "'s score to " + score);
 				
 				return true;
 			}
@@ -288,7 +292,8 @@ public class ScoresCommandExecutor implements CommandExecutor
 					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.addScore", "§a&score&§b points added to &player&'s score. §a[&newscore&]§b").replace("&player&", args[1]).replace("&score&", "" + score).replace("&newscore&", "" + Scores.getScore(plugin.getServer().getOfflinePlayer(args[1]))));
 				}
 				
-				plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Added " + score + " points to " + args[1] + "'s score. [" + Scores.getScore(plugin.getServer().getOfflinePlayer(args[1])) + "]");
+				if (Scores.getMainConfig().getBoolean("log.commands", true))
+					plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Added " + score + " points to " + args[1] + "'s score. [" + Scores.getScore(plugin.getServer().getOfflinePlayer(args[1])) + "]");
 				
 				return true;
 			}
@@ -309,7 +314,8 @@ public class ScoresCommandExecutor implements CommandExecutor
 					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.removeScore", "§a&score&§b points removed from &player&'s score. §a[&newscore&]§b").replace("&player&", args[1]).replace("&score&", "" + score).replace("&newscore&", "" + Scores.getScore(plugin.getServer().getOfflinePlayer(args[1]))));
 				}
 				
-				plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Removed " + score + " points from " + args[1] + "'s score. [" + Scores.getScore(plugin.getServer().getOfflinePlayer(args[1])) + "]");
+				if (Scores.getMainConfig().getBoolean("log.commands", true))
+					plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Removed " + score + " points from " + args[1] + "'s score. [" + Scores.getScore(plugin.getServer().getOfflinePlayer(args[1])) + "]");
 				
 				return true;
 			}

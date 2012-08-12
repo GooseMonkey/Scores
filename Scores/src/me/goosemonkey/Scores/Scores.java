@@ -196,7 +196,8 @@ public class Scores extends JavaPlugin
 			Scores.sendScoresMessage(player, msg);
 		}
 		
-		plugin.getServer().getLogger().info(plugin.getName() + ": Modified " + player.getName() + "'s score by " + amount + " for: " + reason);
+		if (Scores.getMainConfig().getBoolean("log.rewards", true))
+			plugin.getServer().getLogger().info(plugin.getName() + ": Modified " + player.getName() + "'s score by " + amount + " for: " + reason);
 		
 		return Scores.getScore(player);
 	}
