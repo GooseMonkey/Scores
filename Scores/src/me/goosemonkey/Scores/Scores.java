@@ -1,5 +1,8 @@
 package me.goosemonkey.Scores;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -12,11 +15,27 @@ public class Scores extends JavaPlugin
 	static ConfigLocale configLocale;
 	static ConfigScores configScores;
 	
+	private static File dataFolder = null;
+	
 	public void onEnable()
 	{
 		this.setupConfig();
 		
 		this.getCommand("score").setExecutor(new ScoresCommandExecutor(this));
+
+		Scores.dataFolder = this.getDataFolder();
+	}
+	
+	public void onDisable()
+	{
+		try
+		{
+			Scores.getScoresDataConfig().save(new File(Scores.dataFolder, "ScoresData.yml"));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	private void setupConfig()
@@ -81,6 +100,15 @@ public class Scores extends JavaPlugin
 	public static void setScore(Player player, int score)
 	{
 		Scores.getScoresDataConfig().set("scores." + player.getName().toLowerCase(), score);
+		
+		try
+		{
+			Scores.getScoresDataConfig().save(new File(Scores.dataFolder, "ScoresData.yml"));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -91,6 +119,15 @@ public class Scores extends JavaPlugin
 	public static void setScore(OfflinePlayer player, int score)
 	{
 		Scores.getScoresDataConfig().set("scores." + player.getName().toLowerCase(), score);
+		
+		try
+		{
+			Scores.getScoresDataConfig().save(new File(Scores.dataFolder, "ScoresData.yml"));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	/**
