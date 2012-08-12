@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 
 public class DefaultListeners implements Listener
 {
@@ -34,6 +35,20 @@ public class DefaultListeners implements Listener
 		case LAPIS_ORE: Scores.reward(event.getPlayer(), Scores.getValuesConfig().getInt("mine.lapisOre", 10), "mining lapis lazuli", plugin); return;
 		case IRON_ORE: Scores.reward(event.getPlayer(), Scores.getValuesConfig().getInt("mine.ironOre", 2), "mining iron", plugin); return;
 		case COAL_ORE: Scores.reward(event.getPlayer(), Scores.getValuesConfig().getInt("mine.coalOre", 1), "mining coal", plugin); return;
+		}
+	}
+	
+	@EventHandler (priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onBlockPlace(BlockPlaceEvent event)
+	{
+		Material material = event.getBlock().getType();
+		
+		switch (material)
+		{
+		case GOLD_ORE: Scores.reward(event.getPlayer(), 0 - Scores.getValuesConfig().getInt("mine.goldOre", 20), "placing gold ore", plugin); return;
+		case IRON_ORE: Scores.reward(event.getPlayer(), 0 - Scores.getValuesConfig().getInt("mine.ironOre", 2), "placing iron ore", plugin); return;
+		
+		case CAKE_BLOCK: Scores.reward(event.getPlayer(),Scores.getValuesConfig().getInt("place.cake", 10), "baking a cake", plugin); return;
 		}
 	}
 }

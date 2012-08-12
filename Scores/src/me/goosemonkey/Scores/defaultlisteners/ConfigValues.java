@@ -33,5 +33,6 @@ public class ConfigValues extends ConfigAbstract
 		this.checkSet("mine.ironOre", 2);
 		this.checkSet("mine.coalOre", 1);
 
+		this.checkSet("place.cake", 10);
 	}
 }
