@@ -60,6 +60,22 @@ public class ScoresCommandExecutor implements CommandExecutor
 				return true;
 			}
 			
+			if (args[0].equalsIgnoreCase("reload"))
+			{
+				if (!Scores.hasPermission(sender, "scores.reload"))
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.permissionDeny", "§cYou don't have permission."));
+
+					return true;
+				}				
+				
+				this.reloadConfigs();
+				
+				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.reloaded", "Configuration reloaded."));
+				
+				return true;
+			}
+			
 			if (!Scores.hasPermission(sender, "scores.check.others"))
 			{
 				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.permissionDeny", "§cYou don't have permission."));
@@ -302,5 +318,12 @@ public class ScoresCommandExecutor implements CommandExecutor
 		}
 		
 		return false;
+	}
+	
+	private void reloadConfigs()
+	{
+		Scores.configMain.reload();
+		Scores.configLocale.reload();
+		Scores.configScores.reload();
 	}
 }

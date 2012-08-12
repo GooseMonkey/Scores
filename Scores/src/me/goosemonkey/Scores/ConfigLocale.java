@@ -29,6 +29,7 @@ public class ConfigLocale extends ConfigAbstract
 		
 		this.checkSet("message.version", "Version &version& by GooseMonkey");
 		this.checkSet("message.saved", "All players' scores saved.");
+		this.checkSet("message.reloaded", "Configuration reloaded.");
 		this.checkSet("message.permissionDeny", "§cYou don't have permission.");
 		
 		this.checkSet("message.getScore", "You have §a&score&§b points.");

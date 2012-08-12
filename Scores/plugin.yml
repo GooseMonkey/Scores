@@ -18,6 +18,8 @@ permissions:
         description: All permissions in Scores
         children:
             scores.help: true
+            scores.save: true
+            scores.reload: true
             scores.check: true
             scores.check.others: true
             scores.modify: true
@@ -25,7 +27,11 @@ permissions:
         default: true
         description: Get help with /scores help
     scores.save:
+        default: op
         description: Save scores with /scores save
+    scores.reload:
+        default: op
+        description: Reload configuration with /scores reload
     scores.check:
         default: true
         description: Check score with /score
