@@ -101,13 +101,16 @@ public class Scores extends JavaPlugin
 	{
 		Scores.getScoresDataConfig().set("scores." + player.getName().toLowerCase(), score);
 		
-		try
+		if (Scores.getMainConfig().getBoolean("saveOnScoreChange", true))
 		{
-			Scores.getScoresDataConfig().save(new File(Scores.dataFolder, "ScoresData.yml"));
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
+			try
+			{
+				Scores.getScoresDataConfig().save(new File(Scores.dataFolder, "ScoresData.yml"));
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -120,13 +123,16 @@ public class Scores extends JavaPlugin
 	{
 		Scores.getScoresDataConfig().set("scores." + player.getName().toLowerCase(), score);
 		
-		try
+		if (Scores.getMainConfig().getBoolean("saveOnScoreChange", true))
 		{
-			Scores.getScoresDataConfig().save(new File(Scores.dataFolder, "ScoresData.yml"));
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
+			try
+			{
+				Scores.getScoresDataConfig().save(new File(Scores.dataFolder, "ScoresData.yml"));
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 	

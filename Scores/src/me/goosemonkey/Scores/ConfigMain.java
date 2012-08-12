@@ -25,6 +25,6 @@ public class ConfigMain extends ConfigAbstract
 	@Override
 	public void setDefaultValues()
 	{
-		
+		this.checkSet("saveOnScoreChange", true);
 	}
 }
