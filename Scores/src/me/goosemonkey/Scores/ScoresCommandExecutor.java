@@ -74,7 +74,7 @@ public class ScoresCommandExecutor implements CommandExecutor
 				}
 				else
 				{
-					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.unknownPlayer", "Player &input& not found. If the player is offline, the full name must be entered case sensitively.").replace("&input&", args[0]));	
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.unknownPlayer", "Player &input& not found. If the player is offline, the full name must be entered.").replace("&input&", args[0]));	
 				}
 			}
 			

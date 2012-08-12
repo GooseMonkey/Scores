@@ -32,7 +32,7 @@ public class ConfigLocale extends ConfigAbstract
 		
 		this.checkSet("message.getScore", "You have §a&score&§b points.");
 		this.checkSet("message.otherScore", "&player& has §a&score&§b points.");
-		this.checkSet("message.unknownPlayer", "Player &input& not found. If the player is offline, the full name must be entered case sensitively.");
+		this.checkSet("message.unknownPlayer", "Player &input& not found. If the player is offline, the full name must be entered.");
 		this.checkSet("message.unknownPlayerOffline", "Player &input& not found. If the player is offline, add -e to the end of the command and use the exact name.");
 		this.checkSet("message.invalidInteger", "&input& is not a valid integer.");
 		
