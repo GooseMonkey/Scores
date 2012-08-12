@@ -29,5 +29,7 @@ public class ConfigMain extends ConfigAbstract
 		
 		this.checkSet("log.rewards", true);
 		this.checkSet("log.commands", true);
+		
+		this.checkSet("notify.tellPlayerOnCommandScoreChange", true);		
 	}
 }

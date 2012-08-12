@@ -160,6 +160,9 @@ public class ScoresCommandExecutor implements CommandExecutor
 					if (Scores.getMainConfig().getBoolean("log.commands", true))
 						plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Set " + player.getName() + "'s score to " + score);
 					
+					if (Scores.getMainConfig().getBoolean("notify.tellPlayerOnCommandScoreChange", true) && !sender.getName().equalsIgnoreCase(player.getName()))
+						Scores.sendScoresMessage(player, Scores.getLocaleConfig().getString("message.scoreChangedByCommand", "Your score has been changed to §a&score&§b.").replace("&score&", "" + Scores.getScore(player)));					
+					
 					return true;
 				}
 				else
@@ -190,6 +193,9 @@ public class ScoresCommandExecutor implements CommandExecutor
 					
 					if (Scores.getMainConfig().getBoolean("log.commands", true))
 						plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Added " + score + " points to " + player.getName() + "'s score. [" + Scores.getScore(player) + "]");
+					
+					if (Scores.getMainConfig().getBoolean("notify.tellPlayerOnCommandScoreChange", true) && !sender.getName().equalsIgnoreCase(player.getName()))
+						Scores.sendScoresMessage(player, Scores.getLocaleConfig().getString("message.scoreChangedByCommand", "Your score has been changed to §a&score&§b.").replace("&score&", "" + Scores.getScore(player)));					
 					
 					return true;
 				}
@@ -222,6 +228,9 @@ public class ScoresCommandExecutor implements CommandExecutor
 					if (Scores.getMainConfig().getBoolean("log.commands", true))
 						plugin.getServer().getLogger().info("[Scores] " + sender.getName() + ": Removed " + score + " points from " + player.getName() + "'s score. [" + Scores.getScore(player) + "]");
 					
+					if (Scores.getMainConfig().getBoolean("notify.tellPlayerOnCommandScoreChange", true) && !sender.getName().equalsIgnoreCase(player.getName()))
+						Scores.sendScoresMessage(player, Scores.getLocaleConfig().getString("message.scoreChangedByCommand", "Your score has been changed to §a&score&§b.").replace("&score&", "" + Scores.getScore(player)));					
+				
 					return true;
 				}
 				else
