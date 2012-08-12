@@ -2,7 +2,12 @@ package me.goosemonkey.Scores;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
+import me.goosemonkey.Scores.defaultlisteners.ConfigValues;
+import me.goosemonkey.Scores.defaultlisteners.DefaultListeners;
+
+import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -14,6 +19,7 @@ public class Scores extends JavaPlugin
 	static ConfigMain configMain;
 	static ConfigLocale configLocale;
 	static ConfigScores configScores;
+	static ConfigValues configValues;
 	
 	private static File dataFolder = null;
 	
@@ -24,6 +30,8 @@ public class Scores extends JavaPlugin
 		this.getCommand("score").setExecutor(new ScoresCommandExecutor(this));
 
 		Scores.dataFolder = this.getDataFolder();
+		
+		this.getServer().getPluginManager().registerEvents(new DefaultListeners(this), this);
 	}
 	
 	public void onDisable()
@@ -36,6 +44,7 @@ public class Scores extends JavaPlugin
 		configMain = new ConfigMain(this);
 		configLocale = new ConfigLocale(this);
 		configScores = new ConfigScores(this);
+		configValues = new ConfigValues(this);
 	}
 	
 	/**
@@ -63,6 +72,15 @@ public class Scores extends JavaPlugin
 	public static FileConfiguration getScoresDataConfig()
 	{
 		return Scores.configScores.getConfig();
+	}
+	
+	/**
+	 * Get the FileConfiguration object of Values.yml
+	 * @return The score data config's FileConfiguration
+	 */
+	public static FileConfiguration getValuesConfig()
+	{
+		return Scores.configValues.getConfig();
 	}
 	
 	/**
@@ -154,10 +172,18 @@ public class Scores extends JavaPlugin
 	 * @param amount Amount to reward. Negative to take away points
 	 * @param reason Reason for score change. Y value of "You've earned/lost x points for y." Use -ing form, don't capitalize the first letter.
 	 * @param plugin JavaPlugin this is being done from, for logging purposes
-	 * @return Player's new score
 	 */
-	public static int reward(Player player, int amount, String reason, JavaPlugin plugin)
+	public static void reward(Player player, int amount, String reason, JavaPlugin plugin)
 	{
+		if (player.getGameMode() == GameMode.CREATIVE && Scores.getMainConfig().getBoolean("noScoreInCreative", true))
+			return;
+		
+		if (Scores.getMainConfig().getList("noScoreInWorlds", Arrays.asList(new String[]{"ExampleWorld"})).contains(player.getWorld().getName()))
+			return;
+		
+		if (amount == 0)
+			return;
+		
 		Scores.modifyScore(player, amount);
 		
 		if (player.isOnline())
@@ -182,7 +208,7 @@ public class Scores extends JavaPlugin
 				def = "You've earned &score& point for &reason&.";
 			}
 
-			if (amount == 0 || amount > 1)
+			if (amount > 1)
 			{
 				path = "message.earnPoints";
 				def = "You've earned &score& points for &reason&.";
@@ -190,8 +216,8 @@ public class Scores extends JavaPlugin
 			
 			msg = Scores.getLocaleConfig().getString(path, def);
 			
-			msg.replace("&score&", "" + amount);
-			msg.replace("&reason&", reason);
+			msg = msg.replace("&score&", "" + amount);
+			msg = msg.replace("&reason&", reason);
 			
 			Scores.sendScoresMessage(player, msg);
 		}
@@ -199,7 +225,7 @@ public class Scores extends JavaPlugin
 		if (Scores.getMainConfig().getBoolean("log.rewards", true))
 			plugin.getServer().getLogger().info(plugin.getName() + ": Modified " + player.getName() + "'s score by " + amount + " for: " + reason);
 		
-		return Scores.getScore(player);
+		return;
 	}
 	
 	/**

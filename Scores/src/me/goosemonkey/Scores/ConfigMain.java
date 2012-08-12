@@ -1,5 +1,7 @@
 package me.goosemonkey.Scores;
 
+import java.util.Arrays;
+
 /**
  * Main plugin configuration
  */
@@ -30,6 +32,9 @@ public class ConfigMain extends ConfigAbstract
 		this.checkSet("log.rewards", true);
 		this.checkSet("log.commands", true);
 		
-		this.checkSet("notify.tellPlayerOnCommandScoreChange", true);		
+		this.checkSet("notify.tellPlayerOnCommandScoreChange", true);
+		
+		this.checkSet("noScoreInWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
+		this.checkSet("noScoreInCreative", true);
 	}
 }
