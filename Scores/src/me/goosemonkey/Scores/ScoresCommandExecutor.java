@@ -44,6 +44,22 @@ public class ScoresCommandExecutor implements CommandExecutor
 		
 		if (args.length == 1)
 		{
+			if (args[0].equalsIgnoreCase("save"))
+			{
+				if (!Scores.hasPermission(sender, "scores.save"))
+				{
+					Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.permissionDeny", "§cYou don't have permission."));
+
+					return true;
+				}				
+				
+				Scores.saveScores();
+				
+				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.saved", "All players' scores saved."));
+				
+				return true;
+			}
+			
 			if (!Scores.hasPermission(sender, "scores.check.others"))
 			{
 				Scores.sendScoresMessage(sender, Scores.getLocaleConfig().getString("message.permissionDeny", "§cYou don't have permission."));

@@ -24,6 +24,8 @@ permissions:
     scores.help:
         default: true
         description: Get help with /scores help
+    scores.save:
+        description: Save scores with /scores save
     scores.check:
         default: true
         description: Check score with /score
@@ -31,3 +33,4 @@ permissions:
         description: Check other players' scores with /score <name>
     scores.modify:
         description: Modify all player's scores in all ways with /score set/add/remove
+        

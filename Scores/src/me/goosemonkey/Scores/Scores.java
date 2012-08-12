@@ -28,14 +28,7 @@ public class Scores extends JavaPlugin
 	
 	public void onDisable()
 	{
-		try
-		{
-			Scores.getScoresDataConfig().save(new File(Scores.dataFolder, "ScoresData.yml"));
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		Scores.saveScores();
 	}
 	
 	private void setupConfig()
@@ -102,16 +95,7 @@ public class Scores extends JavaPlugin
 		Scores.getScoresDataConfig().set("scores." + player.getName().toLowerCase(), score);
 		
 		if (Scores.getMainConfig().getBoolean("saveOnScoreChange", true))
-		{
-			try
-			{
-				Scores.getScoresDataConfig().save(new File(Scores.dataFolder, "ScoresData.yml"));
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
+			Scores.saveScores();
 	}
 	
 	/**
@@ -124,16 +108,7 @@ public class Scores extends JavaPlugin
 		Scores.getScoresDataConfig().set("scores." + player.getName().toLowerCase(), score);
 		
 		if (Scores.getMainConfig().getBoolean("saveOnScoreChange", true))
-		{
-			try
-			{
-				Scores.getScoresDataConfig().save(new File(Scores.dataFolder, "ScoresData.yml"));
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
+			Scores.saveScores();
 	}
 	
 	/**
@@ -235,5 +210,17 @@ public class Scores extends JavaPlugin
 	public static boolean hasPermission(CommandSender sender, String node)
 	{
 		return sender.hasPermission(node);
+	}
+	
+	public static void saveScores()
+	{
+		try
+		{
+			Scores.getScoresDataConfig().save(new File(Scores.dataFolder, "ScoresData.yml"));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }
