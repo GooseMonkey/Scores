@@ -32,6 +32,7 @@ public class Scores extends JavaPlugin
 		Scores.dataFolder = this.getDataFolder();
 		
 		this.getServer().getPluginManager().registerEvents(new DefaultListeners(this), this);
+		this.getServer().getPluginManager().registerEvents(new ScoresLoginListener(this), this);
 	}
 	
 	public void onDisable()

@@ -48,5 +48,7 @@ public class ConfigLocale extends ConfigAbstract
 		this.checkSet("message.losePoints", "You've lost §a&score&§b points for &reason&.");
 		this.checkSet("message.losePoint", "You've lost §a&score&§b point for &reason&.");
 		
+		this.checkSet("message.login.broadcast", "&player& has logged in with §a&score&§b points.");
+		this.checkSet("message.login.tell", "Welcome, &player&. You have §a&score&§b points.");
 	}
 }

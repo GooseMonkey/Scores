@@ -36,5 +36,9 @@ public class ConfigMain extends ConfigAbstract
 		
 		this.checkSet("noScoreInWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
 		this.checkSet("noScoreInCreative", true);
+		
+		this.checkSet("login.newPlayerScore", 10);
+		this.checkSet("login.tellScoreOnLogin", true);
+		this.checkSet("login.broadcastScoreOnLogin", true);
 	}
 }
